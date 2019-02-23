@@ -10,9 +10,9 @@ class AgentInterface{
     public:
         AgentInterface(MachineInterface<D> *m):machine(m){}
         // Pull kth arm.
-        virtual double PullArm(int k) = 0;
+        virtual void PullArm(int k) = 0;
         // Auto select an arm and pull it.
-        virtual double PullArm() = 0;
+        virtual void PullArm() = 0;
         // Pull arm t times.
         virtual void RepeatPullArm(int t){ while(t--) PullArm(); }
         // Get historical average reward at step s. 
