@@ -1,7 +1,6 @@
 /* Implements a random agent. */
 #include <random>
 
-#include "MachineInterface.h"
 #include "AgentInterface.h"
 
 template<typename D>
@@ -18,7 +17,7 @@ class RandomAgent: public AgentInterface<D>{
             return gen() % (AgentInterface<D>::machine->GetArmCount());
         }
 
-        void Init(){};
+        void Init() override {};
 };
 
 

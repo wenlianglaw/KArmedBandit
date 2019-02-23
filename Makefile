@@ -1,5 +1,5 @@
 INC=-I /opt/X11/include
-LIBS=-L/usr/X11/lib -lX11
+# LIBS=-L/usr/X11/lib -lX11  #unused
 CC=g++
 TARGET=karms
 CFLAGS= -std=c++14 -Wall
