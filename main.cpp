@@ -16,7 +16,6 @@ int main(){
 
     // Agent
     AgentSampleAverage<Dis> a(&machine);
+
     return 0;
 }
-
-
