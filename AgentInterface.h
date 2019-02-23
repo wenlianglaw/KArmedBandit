@@ -1,22 +1,26 @@
 /* Provid an AngentInterface. */
 #pragma once
+#include <fstream>
+#include <string>
+
 #include "MachineInterface.h"
 
 template< typename D>
 class AgentInterface{
     public:
         MachineInterface *machine;
-
     public:
         AgentInterface(MachineInterface *m):machine(m){}
-        // Pull kth arm.
-        virtual double PullArm(int k) = 0;
-        // Auto select an arm and pull it.
-        virtual double PullArm() = 0;
-        // Pull arm t times.
-        virtual void RepeatPullArm(int t){ while(t--) PullArm(); }
-        // Write step-avg_reward data to file.
-        virtual void WriteData(std::string filename) = 0;
+        // Based on its strategy, select an arm to pull.
+        virtual int PullArm() = 0;
+        
         // Init state.
         virtual void Init() = 0;
+
+        // Write step-avg_reward data to file.
+        void WriteData(std::string filename) {
+            std::ofstream out(filename, std::ofstream::out | std::ofstream::app);
+            // TODO write dataw
+            out.close();
+        }
 };

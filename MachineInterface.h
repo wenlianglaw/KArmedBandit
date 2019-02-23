@@ -12,6 +12,9 @@ class MachineInterface{
         virtual void ResetArms(int k) = 0;
         // Get a reward from an arm
         virtual double GetReward(int arm) = 0;
+        // Get arm count
+        virtual int GetArmCount() = 0;
+
     private:
 };
 

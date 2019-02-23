@@ -2,6 +2,7 @@
 #include <random>
 #include "Machine.h"
 #include "AgentSampleAverage.h"
+#include "RandomAgent.h"
 
 int main(){
     using Uni = std::uniform_real_distribution<>;
@@ -14,10 +15,15 @@ int main(){
     int k = 5;
     KArmMachine<Dis>  machine(k);
 
-    // Agent
+    // Agent1
     AgentSampleAverage<Dis> a(&machine);
 
-    a.PullArm(0);
+    // Agent2
+    RandomAgent<Dis> a2(&machine);
+
+    for (int i=0;i<5;i++){
+        std::cout<<"Random Agent chooses: "<< a2.PullArm() << std::endl;
+    }
     return 0;
 }
 

@@ -20,24 +20,10 @@ class AgentSampleAverage : public AgentInterface<D>{
             Init();
         }
 
-        double PullArm(int k) override {
-            double ret =  AgentInterface<D>::machine->GetReward(k);
-            totalRewards += ret;
-            totalAverage = totalRewards / totalStep;
-            averageReward.push_back(totalAverage);
-            return ret;
-        }
-
         /* The algorithm */
         // TODO
-        double PullArm() override {
+        int PullArm() override {
             return 0.0f;
-        }
-
-        void WriteData(std::string filename) override {
-            std::ofstream out(filename, std::ofstream::out | std::ofstream::app);
-
-            out.close();
         }
 
         void Init() override {

@@ -49,4 +49,8 @@ class KArmMachine: public MachineInterface{
         double GetReward(int arm) override {
             return arms[arm](gen);
         }
+
+        int GetArmCount() override {
+            return arms.size();
+        }
 };
