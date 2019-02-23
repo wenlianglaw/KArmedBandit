@@ -16,6 +16,10 @@ int main(){
 
     // Agent
     AgentSampleAverage<Dis> a(&machine);
+<<<<<<< HEAD
+=======
+
+>>>>>>> parent of b81b1e0... test
     return 0;
 }
 
