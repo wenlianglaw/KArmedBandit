@@ -3,24 +3,38 @@
 #include <fstream>
 #include <string>
 
-#include "MachineInterface.h"
+#include "Testbed.h"
 
-template< typename D>
+template< typename T>
 class AgentInterface{
+    protected:
+        // All agents should be test on testbed.
+        Testbed<T> *testbed;
+    private:
+        std::string agent_name;
     public:
-        MachineInterface *machine;
-    public:
-        AgentInterface(MachineInterface *m):machine(m){}
-        // Based on its strategy, select an arm to pull.
+        AgentInterface( std::string &&name ):agent_name(name){}
+        /***
+         * Operate testbed and select an arm to pull based on its strategy, 
+         *
+         * Return:
+         *  The arm to pull.
+         */
         virtual int PullArm() = 0;
         
-        // Init state.
-        virtual void Init() = 0;
+        /***
+         * Init state.  Assign a testbed.
+         */
+        virtual void Init(Testbed<T> *t){
+            testbed = t;
+        }
 
-        // Write step-avg_reward data to file.
+        /***
+         * Write step-avg_reward data to file.
+         */
         void WriteData(std::string filename) {
             std::ofstream out(filename, std::ofstream::out | std::ofstream::app);
-            // TODO write dataw
+            // TODO write data
             out.close();
         }
 };

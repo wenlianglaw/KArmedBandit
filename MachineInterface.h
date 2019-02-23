@@ -8,13 +8,18 @@
 
 class MachineInterface{
     public:
-        // Reset arms, with random probability distribution.
+        /***
+         * Reset arms, with random probability distribution.
+         */
         virtual void ResetArms(int k) = 0;
+        /***
+         * Reset arms, with random probability distribution.
+         */
+        virtual void ResetArms() { ResetArms(GetArmsCount());}
         // Get a reward from an arm
         virtual double GetReward(int arm) = 0;
         // Get arm count
-        virtual int GetArmCount() = 0;
-
+        virtual int GetArmsCount() = 0;
     private:
 };
 

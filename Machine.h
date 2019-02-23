@@ -50,7 +50,7 @@ class KArmMachine: public MachineInterface{
             return arms[arm](gen);
         }
 
-        int GetArmCount() override {
+        int GetArmsCount() override {
             return arms.size();
         }
 };

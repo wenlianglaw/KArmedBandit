@@ -3,6 +3,8 @@
 #include "Machine.h"
 #include "AgentSampleAverage.h"
 #include "RandomAgent.h"
+#include "Testbed.h"
+
 
 int main(){
     using Uni = std::uniform_real_distribution<>;
@@ -15,15 +17,26 @@ int main(){
     int k = 5;
     KArmMachine<Dis>  machine(k);
 
-    // Agent1
-    AgentSampleAverage<Dis> a(&machine);
+    // Agent1:  sample average agent
+    AgentSampleAverage<Dis> sample_average_agent( "WL's sample average agent");
 
-    // Agent2
-    RandomAgent<Dis> a2(&machine);
+    // Agent2:  random agent 
+    RandomAgent<Dis> random_agent( "WL's random agent" );
 
-    for (int i=0;i<5;i++){
-        std::cout<<"Random Agent chooses: "<< a2.PullArm() << std::endl;
-    }
+    // Testbed
+    Testbed<Dis> testbed(&machine);
+    
+    // Start testing Agents
+    testbed.RegisterYourAgent( &random_agent);
+    testbed.RegisterYourAgent( &sample_average_agent );
+
+    // Test all agents
+    testbed.RunAllAgents( 1000 );
+
+    // Print each agent's score.
+    testbed.SortAndPrintUserRank();
+
+    std::cout<<"Thank you!"<<std::endl;
     return 0;
 }
 

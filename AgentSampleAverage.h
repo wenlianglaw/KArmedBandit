@@ -1,11 +1,12 @@
 /* Implements Sample-Average agent. */
-#include "AgentInterface.h"
 #include <string>
 #include <fstream>
 #include <vector>
 
-template <typename D>
-class AgentSampleAverage : public AgentInterface<D>{
+#include "AgentInterface.h"
+
+template <typename T>
+class AgentSampleAverage : public AgentInterface<T>{
     public:
     private:
         // Some history data.
@@ -16,17 +17,19 @@ class AgentSampleAverage : public AgentInterface<D>{
         // Current step.
         int totalStep = 0;
     public:
-        AgentSampleAverage(MachineInterface *m): AgentInterface<D>(m){
-            Init();
+        AgentSampleAverage(std::string &&name):AgentInterface<T>(std::forward<std::string&&>(name)){
         }
-
         /* The algorithm */
         // TODO
         int PullArm() override {
-            return 0.0f;
+            int selection = 0;
+            AgentInterface<T>::testbed->PullArm(this, selection);
+            return 0;
         }
 
-        void Init() override {
+        void Init(Testbed<T> *t) override {
+            AgentInterface<T>::Init(t);
+
             totalAverage = totalRewards = totalStep = 0;
             averageReward.clear();
             // 2000 is a big-enough for our tests.
