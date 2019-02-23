@@ -30,7 +30,8 @@ class AgentSampleAverage : public AgentInterface<D>{
 
         /* The algorithm */
         // TODO
-        void PullArm() override {
+        double PullArm() override {
+            return 0.0f;
         }
 
         double GetAverageReward(int s) const override {
