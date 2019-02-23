@@ -16,7 +16,7 @@ class AgentSampleAverage : public AgentInterface<D>{
         // Current step.
         int totalStep = 0;
     public:
-        AgentSampleAverage(MachineInterface<D> *m): AgentInterface<D>(m){
+        AgentSampleAverage(MachineInterface *m): AgentInterface<D>(m){
             Init();
         }
 
@@ -32,14 +32,6 @@ class AgentSampleAverage : public AgentInterface<D>{
         // TODO
         double PullArm() override {
             return 0.0f;
-        }
-
-        double GetAverageReward(int s) const override {
-            return averageReward[s];
-        }
-
-        double GetTotalReward() const override {
-            return totalAverage;
         }
 
         void WriteData(std::string filename) override {

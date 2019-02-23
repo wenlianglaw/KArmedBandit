@@ -6,7 +6,7 @@
 
 /* Only support uniform_real_distribution and normal_distribution */
 template <typename Distribution>
-class KArmMachine: public MachineInterface<Distribution>{
+class KArmMachine: public MachineInterface{
     private:
         std::random_device rd;
         std::mt19937 gen;
@@ -44,10 +44,6 @@ class KArmMachine: public MachineInterface<Distribution>{
                     arms.push_back(Distribution(mean, 5.0));
                 }
             }
-        }
-
-        void ResetArmsWithProb(std::vector<Distribution> dist) override{
-            arms = dist;
         }
 
         double GetReward(int arm) override {

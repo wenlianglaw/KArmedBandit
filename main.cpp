@@ -16,6 +16,8 @@ int main(){
 
     // Agent
     AgentSampleAverage<Dis> a(&machine);
+
+    a.PullArm(0);
     return 0;
 }
 
