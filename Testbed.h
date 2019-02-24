@@ -40,6 +40,8 @@ class Testbed {
         void Init(){
             timeout = 60;
             machine->ResetArms();
+            user_score.clear();
+            user_steps.clear();
         }
 
         /***
@@ -103,6 +105,7 @@ class Testbed {
          *  pull_times: For each agent, pulling pull_times times arms.
          */
         void RunAllAgents( int pull_times ){
+            Init();
             pulling_times = pull_times;
             for ( auto agent : all_agents){
                 InitAgent( agent );

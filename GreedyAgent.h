@@ -12,7 +12,7 @@
 
 template <typename T>
 class GreedyAgent : public AgentInterface<T>{
-    private:
+    protected:
         // <estimation, arm>
         using Key_t = std::pair<double, int>;
         std::set<Key_t, std::greater<Key_t>> estimation;
@@ -30,7 +30,7 @@ class GreedyAgent : public AgentInterface<T>{
             steps.clear();
         }
 
-        int PullArm() override{
+        virtual int PullArm() override{
             auto selection = *estimation.begin();
             
             estimation.erase( estimation.begin() );
