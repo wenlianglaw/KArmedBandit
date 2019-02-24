@@ -7,7 +7,6 @@
 #include <iostream>
 #include <unordered_map>
 #include <unordered_set>
-#include <iomanip>
 #include <algorithm>
 #include <functional>
 
@@ -121,7 +120,14 @@ class Testbed {
         void SortAndPrintUserRank(){
             using namespace std;
             // Sort
-            
+            std::vector<AgentInterface<T>*> sorted_agent;
+            std::transform( all_agents.begin(), all_agents.end(), std::back_inserter(sorted_agent),
+                    []( const auto& a ){ return a;});
+            std::sort( sorted_agent.begin(), sorted_agent.end(), [&, this]( auto *agent1, auto *agent2){
+                    return (this->user_score)[agent1] > (this->user_score)[agent2];
+                    });
+
+           
             // Data to be printed
             vector<vector<string>> buffer;
             vector<string> row;
@@ -132,7 +138,7 @@ class Testbed {
             
             // Prepare each row's data.
             int rank = 1;
-            for(auto agent : all_agents ){
+            for(auto agent : sorted_agent ){
                 row = { to_string(rank), agent->GetName(), to_string(user_score[agent]),
                     to_string(user_score[agent]/ user_steps[agent])};
                 rank++;
@@ -166,10 +172,14 @@ class Testbed {
 
         /***
          * Pretty print a row.
+         *  ------------------------------------------------------
+         * | Rank |  Agent Name  |  Total Score  |  Average Score |
+         *  ------------------------------------------------------
          *
          * Args:
          *  strs:  The strs to be output.
          *  col_width:  Each string's width.
+         *  center:  If enable, the word in the column will be centered.  This only affect the one line column.
          */
         void PrettyPrintRow( const std::vector<std::string> &strs, std::vector<int> &&col_width , bool center = true){
             using namespace std;

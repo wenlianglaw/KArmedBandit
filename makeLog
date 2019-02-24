@@ -1,0 +1,1 @@
+g++ -std=c++14 -Wall  -c main.cpp -o main.o -I /opt/X11/include 
