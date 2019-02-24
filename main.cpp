@@ -1,10 +1,9 @@
 #include <iostream>
 #include <random>
-#include "Machine.h"
-#include "AgentSampleAverage.h"
-#include "RandomAgent.h"
+
+#include "./Machines/Machine.h"
 #include "Testbed.h"
-#include "GreedyWithEpslion.h"
+#include "./Agents/Agents.h"
 
 int main(){
     using Uni = std::uniform_real_distribution<>;

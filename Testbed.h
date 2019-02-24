@@ -10,8 +10,8 @@
 #include <algorithm>
 #include <functional>
 
-#include "MachineInterface.h"
-#include "AgentInterface.h"
+#include "./Machines/MachineInterface.h"
+#include "./Agents/AgentInterface.h"
 
 template <typename T> class AgentInterface;
 template <typename T = std::normal_distribution<>>

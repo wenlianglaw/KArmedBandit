@@ -3,8 +3,9 @@
 #include <fstream>
 #include <string>
 
-#include "Testbed.h"
+#include "../Testbed.h"
 
+template <typename T> class Testbed;
 template< typename T>
 class AgentInterface{
     protected:
