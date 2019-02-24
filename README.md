@@ -1,10 +1,10 @@
 # KArmBandit
 
-# Install and run
-## MacOS
+## Install and run
+### MacOS
 ```make```
 
-## Other platform
+### Other platform
 N/A.  Well welcome to conrtibute your own make file or solution file!  :)
 
 ## **\<<Reinforcement Learning\>> Chapter 3**
