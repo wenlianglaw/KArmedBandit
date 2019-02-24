@@ -29,6 +29,8 @@ class AgentInterface{
             testbed = t;
         }
 
+        virtual std::string GetName(){ return agent_name; }
+
         /***
          * Write step-avg_reward data to file.
          */

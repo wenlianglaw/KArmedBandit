@@ -30,7 +30,7 @@ int main(){
     testbed.RegisterYourAgent( &random_agent);
     testbed.RegisterYourAgent( &sample_average_agent );
 
-    // Test all agents
+    // Test all agents, each pull 1000 times arm.
     testbed.RunAllAgents( 1000 );
 
     // Print each agent's score.
