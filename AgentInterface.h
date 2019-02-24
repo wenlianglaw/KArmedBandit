@@ -9,7 +9,7 @@ template< typename T>
 class AgentInterface{
     protected:
         // All agents should be test on testbed.
-        Testbed<T> *testbed;
+        Testbed<T> *testbed = nullptr;
     private:
         std::string agent_name;
     public:

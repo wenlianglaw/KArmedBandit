@@ -40,7 +40,7 @@ class KArmMachine: public MachineInterface{
             }
             else{
                 for(int i=0;i<k;i++){
-                    double mean = std::uniform_real_distribution<>(0, 100)(gen);
+                    double mean = std::uniform_real_distribution<>(0, 20)(gen);
                     arms.push_back(Distribution(mean, 5.0));
                 }
             }

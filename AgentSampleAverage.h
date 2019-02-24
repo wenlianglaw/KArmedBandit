@@ -10,29 +10,32 @@ class AgentSampleAverage : public AgentInterface<T>{
     public:
     private:
         // Some history data.
-        std::vector<double> averageReward;
+        std::vector<double> rewardHistory;
         // Total average.
-        double totalAverage = 0.0f;
+        double averageReward = 0.0f;
         double totalRewards = 0.0f;
         // Current step.
         int totalStep = 0;
     public:
         AgentSampleAverage(std::string &&name):AgentInterface<T>(std::forward<std::string&&>(name)){
         }
-        /* The algorithm */
-        // TODO
+        /***
+         * The algorithm 
+         *
+         **/
         int PullArm() override {
             int selection = 0;
-            AgentInterface<T>::testbed->PullArm(this, selection);
-            return 0;
+
+            AgentInterface<T>::testbed->PullArm( this, selection);
+            return selection;
         }
 
         void Init(Testbed<T> *t) override {
             AgentInterface<T>::Init(t);
 
-            totalAverage = totalRewards = totalStep = 0;
-            averageReward.clear();
+            averageReward = totalRewards = totalStep = 0;
+            rewardHistory.clear();
             // 2000 is a big-enough for our tests.
-            averageReward.reserve(2000);
+            rewardHistory.reserve(2000);
         }
 };

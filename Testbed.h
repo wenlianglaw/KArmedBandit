@@ -27,6 +27,8 @@ class Testbed {
         MachineInterface *machine;
         // Test time out for each user, in seconds.
         int timeout;
+        // Pulling time
+        int pulling_times;
     public:
         Testbed(MachineInterface *m): machine(m){
             Init();
@@ -101,6 +103,7 @@ class Testbed {
          *  pull_times: For each agent, pulling pull_times times arms.
          */
         void RunAllAgents( int pull_times ){
+            pulling_times = pull_times;
             for ( auto agent : all_agents){
                 InitAgent( agent );
                 for( int i=0; i<pull_times; i++){
@@ -127,7 +130,6 @@ class Testbed {
                     return (this->user_score)[agent1] > (this->user_score)[agent2];
                     });
 
-           
             // Data to be printed
             vector<vector<string>> buffer;
             vector<string> row;
@@ -144,6 +146,7 @@ class Testbed {
                 rank++;
                 buffer.push_back(row);
             }
+            cout<<"Pulling "<< pulling_times<<" Times"<<endl;
             PrettyPrint(buffer);
         }
 
