@@ -55,8 +55,9 @@ The machine is a K Armed Machine.  It defines how many arms in there, and what's
 
 The Agent makes decision on which arm to pull.  You may consider to implement your own algorithm for this process.
 
-## Benchmarks (To be update)
+## Benchmarks (To be update) 
 With probability normal_distribution(mean = rand(0,50), sigma  3,5), greedy error set to 0.1, sample average always chooses the first arm, we have:
+```
 Pulling 2000 Times
  ----------------------------------------------------------------
 |Rank |          Agent Name          | Total Score |Average Score|
@@ -121,6 +122,6 @@ Pulling 2000 Times
  ----------------------------------------------------------------
 |  4  |       WL's random agent      | 41491.962390|  20.745981  |
  ----------------------------------------------------------------
-
+```
 
 
