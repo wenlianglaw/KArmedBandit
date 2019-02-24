@@ -160,7 +160,7 @@ class Testbed {
          * to make the maximum height minmum.
          */
         void PrettyPrint( const std::vector<std::vector<std::string>> &strs){
-            // This number is randomly selected. It specifiesy a row's width
+            // This number is randomly selected. It specifies a row's width
             int row_width = 60;
             auto best_layout = BestLayout( strs, row_width); 
             PrettyPrintHelper( strs, std::forward<std::vector<int>&&>(best_layout));
@@ -219,7 +219,7 @@ class Testbed {
                     if(curCursor >= section_end_index[whichStr]){
                         whichStr ++;
                     }
-                    // center only for the single line
+                    // center only apply on single line
                     if(center && col_width[whichStr] > strs[whichStr].size()
                             && i[whichStr] == 0){
                         int free_space = col_width[whichStr] - strs[whichStr].size();
