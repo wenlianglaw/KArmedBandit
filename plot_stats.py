@@ -9,8 +9,9 @@ def DrawLogs( dir_name ):
   agent_data = dict()
 
   files = os.listdir( dir_name )
+  fig, axes = plt.subplots(figsize=(20, 10))
   for agent in files:
-    print('processing %s' % agent)  
+    print('processing %s''s data' % agent)  
     filename = os.path.join( dir_name, agent )
     agent_data[agent] = []
     with open( filename , 'r') as f:
@@ -18,16 +19,28 @@ def DrawLogs( dir_name ):
   
     data_len = len(agent_data[agent])
     x = np.linspace(0, data_len, 1)
-    # Only print X points, otherwise the plot will be too dense
-    sample_cnt = 500
+    sample_cnt = 10000
+    
+    # agent_data is the raw data.  We are going to plot the average reward. 
+    plot_data = []
     if sample_cnt < len(agent_data[agent]):
-      plt.plot( [agent_data[agent][i] for i in range(0, len(agent_data[agent]), len(agent_data[agent]) / sample_cnt)], 
-            label = agent)
+      plot_data = [agent_data[agent][i] for i in range(0, len(agent_data[agent]), len(agent_data[agent]) / sample_cnt)] 
     else:
-      plt.plot( agent_data[agent], label = agent )
+      plot_data = agent_data[agent]
 
-  plt.legend()
-  plt.show()
+    sum = 0
+    for i in range(len(plot_data)):
+      sum += plot_data[i]
+      plot_data[i] = float(sum) / (i+1)
+    
+    plt.plot( plot_data, label = agent )
 
+  plt.legend(loc='lower right')
+  #plt.show()
+  plt.draw()
+  plt.subplots_adjust(left=0.03, right=0.98, top = 0.95, bottom=0.03)
+  plt.pause(1)
+  raw_input('<Hit Enter To close>')
+  plt.close(fig)
 
 DrawLogs(LOGS_DIR)

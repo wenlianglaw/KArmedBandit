@@ -28,7 +28,7 @@ class GreedyWithEpslionAgent: public GreedyAgent<T>{
         virtual int PullArm() override{
             // With probility epslion, selection a random node.
             if( std::uniform_real_distribution<>(0.0f, 1.0f)(gen) < epslion ){
-                // update a random arm's estimation
+                // Randomly select an arm
                 int arm = gen() % (AgentInterface<T>::testbed->GetArmsCount());
                 auto key = std::find_if(this->estimation.begin(), this->estimation.end(),
                         [&](auto key){ return key.second == arm; });
@@ -40,7 +40,7 @@ class GreedyWithEpslionAgent: public GreedyAgent<T>{
                 this->LogReward(reward);
 
                 // Update new estimation for this selection
-                selection.first += 1.0 / this->steps[selection.second] * ( reward - selection.first );
+                selection.first = reward;
                 this->estimation.insert(selection);
                 
                 return selection.second;

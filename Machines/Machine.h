@@ -11,14 +11,16 @@ class KArmMachine: public MachineInterface{
         std::random_device rd;
         std::mt19937 gen;
         Distribution dist;
+        double sigma;
 
         static constexpr bool isUniformDistribution = std::is_same<Distribution,
                          std::uniform_real_distribution<>>();
     public:
         std::vector<Distribution> arms;
-        KArmMachine(int k){
+        KArmMachine(int k, double _sigma = 3.5f){
             gen = std::mt19937(rd());
             ResetArms(k);
+            sigma = _sigma;
         }
 
         void ResetArms(int k) override {
@@ -40,8 +42,8 @@ class KArmMachine: public MachineInterface{
             }
             else{
                 for(int i=0;i<k;i++){
-                    double mean = std::uniform_real_distribution<>(0, 50)(gen);
-                    arms.push_back(Distribution(mean, 3.5));
+                    double mean = std::uniform_real_distribution<>(0, 10)(gen);
+                    arms.push_back(Distribution(mean, sigma));
                 }
             }
         }
