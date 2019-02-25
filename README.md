@@ -6,6 +6,10 @@ I'm reading \<<Reinforcement leraning\>> right now.  This program is made for le
 ### MacOS
 ```make```
 
+Use
+```python plot_stats.py```
+To plot the statistics.
+
 ### Other platform
 N/A.  Well welcome to conrtibute your own make file or solution file!  :)
 
