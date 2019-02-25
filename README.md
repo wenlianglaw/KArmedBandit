@@ -4,12 +4,14 @@ I'm reading \<<Reinforcement leraning\>> right now.  This program is made for le
 
 ## Install and run
 ### MacOS
+**Make**  
 ```make```
 
-Run
-```./karms --plot --sigma 2.5```
--\--plot option plots the average rewards of each agent.
--\--sigma sets the sigma of the normal distribution.
+Run   
+```./karms --plot --sigma 2.5```  
+
+--plot option plots the average rewards of each agent.   
+--sigma sets the sigma of the normal distribution.   
 
 You may also run python script separatly to plot the sattstic.
 ```python plot_stats.py```
@@ -66,7 +68,63 @@ The Agent makes decision on which arm to pull.  You may consider to implement yo
 ## Benchmarks (To be update) 
 
 ```
-
+Using normal distribution with sigma: 3.5
+sigma 3.5
+Test: 0
+Pulling 1000 Times
+ ----------------------------------------------------------------
+|Rank |           Agent Name          | Total Score|Average Score|
+ ----------------------------------------------------------------
+|  1  |   WL's sample average agent   | 8592.378465|   8.592378  |
+ ----------------------------------------------------------------
+|  2  |       Wl's greedy agent       | 8327.543142|   8.327543  |
+ ----------------------------------------------------------------
+|  3  | Wl's greedy agent with errors | 7933.258749|   7.933259  |
+ ----------------------------------------------------------------
+Test: 1
+Pulling 1000 Times
+ ----------------------------------------------------------------
+|Rank |           Agent Name          | Total Score|Average Score|
+ ----------------------------------------------------------------
+|  1  |   WL's sample average agent   | 9851.771634|   9.851772  |
+ ----------------------------------------------------------------
+|  2  |       Wl's greedy agent       | 9403.048222|   9.403048  |
+ ----------------------------------------------------------------
+|  3  | Wl's greedy agent with errors | 8491.471485|   8.491471  |
+ ----------------------------------------------------------------
+Test: 2
+Pulling 1000 Times
+ ----------------------------------------------------------------
+|Rank |           Agent Name          | Total Score|Average Score|
+ ----------------------------------------------------------------
+|  1  |   WL's sample average agent   | 8115.678435|   8.115678  |
+ ----------------------------------------------------------------
+|  2  |       Wl's greedy agent       | 7557.027302|   7.557027  |
+ ----------------------------------------------------------------
+|  3  | Wl's greedy agent with errors | 6953.465828|   6.953466  |
+ ----------------------------------------------------------------
+Test: 3
+Pulling 1000 Times
+ ----------------------------------------------------------------
+|Rank |           Agent Name          | Total Score|Average Score|
+ ----------------------------------------------------------------
+|  1  |   WL's sample average agent   | 9054.045176|   9.054045  |
+ ----------------------------------------------------------------
+|  2  |       Wl's greedy agent       | 7869.400590|   7.869401  |
+ ----------------------------------------------------------------
+|  3  | Wl's greedy agent with errors | 7658.553889|   7.658554  |
+ ----------------------------------------------------------------
+Test: 4
+Pulling 1000 Times
+ ----------------------------------------------------------------
+|Rank |           Agent Name          | Total Score|Average Score|
+ ----------------------------------------------------------------
+|  1  |   WL's sample average agent   | 7962.415837|   7.962416  |
+ ----------------------------------------------------------------
+|  2  |       Wl's greedy agent       | 7156.451314|   7.156451  |
+ ----------------------------------------------------------------
+|  3  | Wl's greedy agent with errors | 6242.826272|   6.242826  |
+ ----------------------------------------------------------------
 ```
 
 
