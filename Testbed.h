@@ -116,6 +116,15 @@ class Testbed {
         }
 
         /***
+         * Write Logs for each agent to its own log file.
+         * File name would be {agent_name}.
+         */
+        void LogAgentsData(){
+            for( auto agent : all_agents )
+                agent->LogDataToFile();
+        }
+
+        /***
          * After running tests, sort users by their performance and print to screen.
          *  ------------------------------------------------------
          * | Rank |  Agent Name  |  Total Score  |  Average Score |

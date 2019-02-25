@@ -25,7 +25,7 @@ int main(){
     // Agent3: greedy agent.
     GreedyAgent<Dis> greedy_agent( "Wl's greedy agent" );
 
-    // Agent3: greedy with epslion agent.
+    // Agent4: greedy with epslion agent.
     GreedyWithEpslionAgent<Dis> greedy_with_epslion_agent( "Wl's greedy agent with errors" , 0.1f);
 
     // Testbed
@@ -40,11 +40,14 @@ int main(){
     // Test all agents, each of them pulls X times arms.
     for(int i=0; i<5; i++){
         std::cout<<"Test: "<<i<<std::endl;
-        testbed.RunAllAgents( 2000 );
+        testbed.RunAllAgents( 5000 );
 
         // Print each agent's score.
         testbed.SortAndPrintUserRank();
     }
+
+    // Log data to log files.
+    testbed.LogAgentsData();
 
     std::cout<<"Thank you!"<<std::endl;
     return 0;

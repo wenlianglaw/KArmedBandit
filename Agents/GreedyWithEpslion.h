@@ -1,4 +1,7 @@
-/* Greedy agent with error epslion */
+/* Greedy agent with error epslion 
+ *
+ * With a probability epslion, it chooses random arm to pull.  Otherwise it chooses the greedy move.
+ */
 #pragma once
 #include <random>
 #include <algorithm>
@@ -34,6 +37,7 @@ class GreedyWithEpslionAgent: public GreedyAgent<T>{
 
                 // Apply this selection
                 double reward = AgentInterface<T>::testbed->PullArm( this, selection.second );
+                this->LogReward(reward);
 
                 // Update new estimation for this selection
                 selection.first += 1.0 / this->steps[selection.second] * ( reward - selection.first );

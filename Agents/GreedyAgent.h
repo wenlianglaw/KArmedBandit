@@ -36,6 +36,7 @@ class GreedyAgent : public AgentInterface<T>{
             estimation.erase( estimation.begin() );
             steps[selection.second]++;
             double reward = AgentInterface<T>::testbed->PullArm( this, selection.second );
+            this->LogReward(reward);
 
             // Update new estimation
             selection.first += 1.0 / steps[selection.second] * ( reward - selection.first );

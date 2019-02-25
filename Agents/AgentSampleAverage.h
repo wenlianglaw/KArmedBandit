@@ -26,7 +26,9 @@ class AgentSampleAverage : public AgentInterface<T>{
         int PullArm() override {
             int selection = 0;
 
-            AgentInterface<T>::testbed->PullArm( this, selection);
+            double reward = AgentInterface<T>::testbed->PullArm( this, selection);
+            this->LogReward(reward);
+
             return selection;
         }
 

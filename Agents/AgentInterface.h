@@ -2,6 +2,8 @@
 #pragma once
 #include <fstream>
 #include <string>
+#include <chrono>
+#include <ctime>
 
 #include "../Testbed.h"
 
@@ -13,6 +15,7 @@ class AgentInterface{
         Testbed<T> *testbed = nullptr;
     private:
         std::string agent_name;
+        std::vector<double> history_rewards;
     public:
         AgentInterface( std::string &&name ):agent_name(name){}
         /***
@@ -28,16 +31,47 @@ class AgentInterface{
          */
         virtual void Init(Testbed<T> *t){
             testbed = t;
+            history_rewards.clear();
         }
 
         virtual std::string GetName(){ return agent_name; }
 
         /***
-         * Write step-avg_reward data to file.
+         * Log step-avg_reward data to file.
+         * The log format contains n lines.  Each line contians a single double vlaue.
+         *
+         * Args:
+         *  filename:  The file name, if not specified, it will use {agent_name} as default.
          */
-        void WriteData(std::string filename) {
-            std::ofstream out(filename, std::ofstream::out | std::ofstream::app);
-            // TODO write data
-            out.close();
+        void LogDataToFile(std::string filename = "") {
+            using namespace std::chrono;
+            // Set log file to date if it is empty as default.
+            if( filename.empty() ){
+                std::time_t now = system_clock::to_time_t(system_clock::now());
+                struct tm* time_info = localtime( &now );
+                char buffer[80];
+                strftime( buffer, 80, "%F_%H%M%S", time_info);
+                filename = "./Logs/" + agent_name; // + "_" + std::string(buffer);
+                size_t pos = 0;
+                while( (pos = filename.find(" ", pos)) != std::string::npos ){
+                    filename.replace( pos, 1, "_");
+                    pos++;
+                }
+            }
+            std::ofstream out(filename, std::ofstream::out );
+            if( not history_rewards.empty() ){
+                for( double reward : history_rewards ){
+                    out<<reward<<std::endl;
+                }
+                out.close();
+            }else{
+                out<<"No reward data in "<< agent_name<<std::endl;
+            }
         }
+
+    protected:
+        inline virtual void LogReward( double reward ){
+            history_rewards.push_back(reward);
+        }
+
 };
