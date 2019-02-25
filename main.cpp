@@ -49,21 +49,21 @@ int main(int argc, char **argv){
     testbed.RegisterYourAgent( &sample_average_agent );
 
     // Agent2:  random agent 
-    // RandomAgent<Dis> random_agent( "WL's random agent" );
-    // testbed.RegisterYourAgent( &random_agent);
+    RandomAgent<Dis> random_agent( "WL's random agent" );
+    testbed.RegisterYourAgent( &random_agent);
 
     // Agent3: greedy agent.
-    GreedyAgent<Dis> greedy_agent( "Wl's greedy agent" );
+    GreedyAgent<Dis> greedy_agent( "WL's greedy agent" );
     testbed.RegisterYourAgent( &greedy_agent);
 
     // Agent4: greedy with epslion agent.
-    GreedyWithEpslionAgent<Dis> greedy_with_epslion_agent( "Wl's greedy agent with errors" , 0.05f);
+    GreedyWithEpslionAgent<Dis> greedy_with_epslion_agent( "WL's greedy agent with errors" , 0.05f);
     testbed.RegisterYourAgent( &greedy_with_epslion_agent);
 
     // Test all agents, each of them pulls X times arms.
     for(int i=0; i<5; i++){
         std::cout<<"Test: "<<i<<std::endl;
-        testbed.RunAllAgents( 1000 );
+        testbed.RunAllAgents( 2000 );
 
         // Print each agent's score.
         testbed.SortAndPrintUserRank();

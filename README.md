@@ -61,7 +61,8 @@ We have
 
 Testbed provides a testbed to test and run all the agents you have made.  It has a K Armed Mahine inside itself.  Bascially it will use the agents to pull the machine repeatedly and record how it performs.
 
-The machine is a K Armed Machine.  It defines how many arms in there, and what's the yiedl function of each arm.
+The machine is a K Armed Machine.  It defines how many arms in there, and what's the yiedl function of each arm.  
+The true value q∗(a) of each of the ten actions was selected according to a normal distribution with mean zero and unit variance, and then the actual rewards were selected according to a mean q∗(a) unit variance normal distribution
 
 The Agent makes decision on which arm to pull.  You may consider to implement your own algorithm for this process.
 

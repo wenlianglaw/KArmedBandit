@@ -17,7 +17,7 @@ class KArmMachine: public MachineInterface{
                          std::uniform_real_distribution<>>();
     public:
         std::vector<Distribution> arms;
-        KArmMachine(int k, double _sigma = 3.5f){
+        KArmMachine(int k, double _sigma = 1.0f){
             gen = std::mt19937(rd());
             ResetArms(k);
             sigma = _sigma;
@@ -42,7 +42,7 @@ class KArmMachine: public MachineInterface{
             }
             else{
                 for(int i=0;i<k;i++){
-                    double mean = std::uniform_real_distribution<>(0, 10)(gen);
+                    double mean = std::uniform_real_distribution<>(0, 1)(gen);
                     arms.push_back(Distribution(mean, sigma));
                 }
             }
