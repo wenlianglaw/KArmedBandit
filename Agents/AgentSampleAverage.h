@@ -1,11 +1,18 @@
-/* Implements Sample-Average agent. */
+/* Implements Sample-Average agent.
+ *
+ * With eplison probability, it randomly choose an arm to pull.
+ * If defined alpha, alpha must be a constant in (0,1), it will use alpha as step size.
+ * Q(n+1) = Q(n) + alpha * ( R(n) - Q(n) )
+ * Q(n+1) = Q(n) + 1/N * ( R(n) - Q(n) )
+ */
+
 #include <string>
 #include <vector>
 #include <set>
 #include <unordered_map>
 #include <vector>
 #include <functional>
-
+#include <cmath>
 
 #include "AgentInterface.h"
 
@@ -19,10 +26,24 @@ class AgentSampleAverage : public AgentInterface<T>{
         // <arm, choosen times>
         std::unordered_map<int, int> steps;
         double epslion;
+        double alpha;
 
     public:
-        AgentSampleAverage(std::string &&name, double _ep = 0.0f):AgentInterface<T>(std::forward<std::string&&>(name)){
+        /***
+         * Constructor
+         *
+         * With eplison probability, it randomly choose an arm to pull.
+         * If defined alpha, alpha must be a constant in (0,1), it will use alpha as step size.
+         * Q(n+1) = Q(n) + alpha * ( R(n) - Q(n) )
+         * Q(n+1) = Q(n) + 1/N * ( R(n) - Q(n) )
+         *
+         * Args:
+         *  _ep: eplison, double.
+         *  _a: alpha, double
+         */
+        AgentSampleAverage(std::string &&name, double _ep = 0.0f, double _a = NAN):AgentInterface<T>(std::forward<std::string&&>(name)){
             epslion = _ep;
+            alpha = _a;
         }
         /***
          * The algorithm 
@@ -58,7 +79,11 @@ class AgentSampleAverage : public AgentInterface<T>{
                 this->LogReward(reward);
 
                 // Update new estimation
-                selection.first += 1.0 / steps[selection.second] * ( reward - selection.first );
+                // Use self defined nan or not
+                if( std::isnan( alpha ) )
+                    selection.first += 1.0 / steps[selection.second] * ( reward - selection.first );
+                else
+                    selection.first += 1.0 / alpha * ( reward - selection.first );
                 estimation.insert(selection);
 
                 return selection.second;

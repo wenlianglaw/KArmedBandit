@@ -23,7 +23,7 @@ class GreedyAgent : public AgentInterface<T>{
             epslion = _ep;
         }
 
-        void Init(Testbed<T> *t){
+        void Init(Testbed<T> *t) override {
             AgentInterface<T>::Init(t);
 
             int n = t->GetArmsCount();

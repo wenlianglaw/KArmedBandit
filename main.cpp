@@ -49,7 +49,7 @@ int main(int argc, char **argv){
     testbed.RegisterYourAgent( &sample_average_agent );
 
     // Agent1.5: sample average with epslion
-    AgentSampleAverage<Dis> sample_average_agent_with_epslion( "WL's sample average agent with epslion", 0.1f);
+    AgentSampleAverage<Dis> sample_average_agent_with_epslion( "WL's sample average agent with epslion", 0.05f);
     testbed.RegisterYourAgent( &sample_average_agent_with_epslion );
 
     // Agent2:  random agent 
@@ -61,13 +61,17 @@ int main(int argc, char **argv){
     testbed.RegisterYourAgent( &greedy_agent);
 
     // Agent4: greedy with epslion agent.
-    GreedyAgent<Dis> greedy_with_epslion_agent( "WL's greedy agent with errors" , 0.05f);
+    GreedyAgent<Dis> greedy_with_epslion_agent( "WL's greedy agent with epslion" , 0.05f);
     testbed.RegisterYourAgent( &greedy_with_epslion_agent);
+
+    // Agent5: sample average with customized step size agent
+    AgentSampleAverage<Dis> sample_average_agent_with_step_size( "WL's sample average with step size", 0.00f, 0.15f);
+    testbed.RegisterYourAgent( &sample_average_agent_with_step_size );
 
     // Test all agents, each of them pulls X times arms.
     for(int i=0; i<5; i++){
         std::cout<<"Test: "<<i<<std::endl;
-        testbed.RunAllAgents( 2000 );
+        testbed.RunAllAgents( 800 );
 
         // Print each agent's score.
         testbed.SortAndPrintUserRank();

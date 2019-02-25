@@ -173,9 +173,7 @@ class Testbed {
             int row_width = 80;
             auto best_layout = BestLayout( strs, row_width); 
             PrettyPrintHelper( strs, std::forward<std::vector<int>&&>(best_layout));
-            std::string sepRow( row_width + strs[0].size(), '-');
-            sepRow = ' ' + sepRow;
-            std::cout<<sepRow<<std::endl;
+            std::cout<<" "<<std::string( row_width + strs[0].size() /* How many '|'s */, '-')<<std::endl;
 
         }
 
@@ -194,7 +192,7 @@ class Testbed {
          * Args:
          *  strs:  The strs to be output.
          *  col_width:  Each string's width.
-         *  center:  If enable, the word in the column will be centered.  This only affect the one line column.
+         *  center:  If enable, the word in the column will be centered.
          */
         void PrettyPrintRow( const std::vector<std::string> &strs, std::vector<int> &&col_width , bool center = true){
             using namespace std;
@@ -228,10 +226,13 @@ class Testbed {
                     if(curCursor >= section_end_index[whichStr]){
                         whichStr ++;
                     }
-                    // center only apply on single line
-                    if(center && col_width[whichStr] > strs[whichStr].size()
-                            && i[whichStr] == 0){
-                        int free_space = col_width[whichStr] - strs[whichStr].size();
+                    // center output in cells
+                    if(center /* center enabled */
+                            /* start of the column: If current cursor is the start of the first col or rest. */
+                            and (curCursor == 0 or  (whichStr >= 1 and curCursor == section_end_index[whichStr-1] + 1))
+                            /* left char's len < col len */
+                            and col_width[whichStr] > strs[whichStr].size() - i[whichStr]){ 
+                        int free_space = col_width[whichStr] - ( strs[whichStr].size() - i[whichStr] );
                         for(int i=0; i < free_space -  free_space  / 2; i++){
                             curCursor++;
                             cout<<' ';
