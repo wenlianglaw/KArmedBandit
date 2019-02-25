@@ -1,7 +1,7 @@
 /* Implements Sample-Average agent.
  *
  * With eplison probability, it randomly choose an arm to pull.
- * If defined alpha, alpha must be a constant in (0,1), it will use alpha as step size.
+ * If defined alpha, alpha must be a constant in (0,1], it will use alpha as step size.
  * Q(n+1) = Q(n) + alpha * ( R(n) - Q(n) )
  * Q(n+1) = Q(n) + 1/N * ( R(n) - Q(n) )
  */
@@ -51,21 +51,20 @@ class AgentSampleAverage : public AgentInterface<T>{
          **/
         int PullArm() override {
             // With probility epslion, selection a random node.
-            if( std::uniform_real_distribution<>(0.0f, 1.0f)(this->gen) < epslion ){
+            if( epslion != 0.0f && std::uniform_real_distribution<>(0.0f, 1.0f)(this->gen) < epslion ){
                 // Randomly select an arm
                 int arm = this->gen() % (AgentInterface<T>::testbed->GetArmsCount());
-                auto key = std::find_if(this->estimation.begin(), this->estimation.end(),
+                auto key = std::find_if(estimation.begin(), estimation.end(),
                         [&](auto key){ return key.second == arm; });
                 auto selection = *key;
-                this->estimation.erase(key);
+                estimation.erase(key);
 
                 // Apply this selection
                 double reward = AgentInterface<T>::testbed->PullArm( this, selection.second );
                 this->LogReward(reward);
 
                 // Update new estimation for this selection
-                selection.first = reward;
-                this->estimation.insert(selection);
+                UpdateReward( selection, reward );
 
                 return selection.second;
             }
@@ -74,18 +73,12 @@ class AgentSampleAverage : public AgentInterface<T>{
                 auto selection = *estimation.begin();
 
                 estimation.erase( estimation.begin() );
-                steps[selection.second]++;
                 double reward = AgentInterface<T>::testbed->PullArm( this, selection.second );
                 this->LogReward(reward);
 
                 // Update new estimation
-                // Use self defined nan or not
-                if( std::isnan( alpha ) )
-                    selection.first += 1.0 / steps[selection.second] * ( reward - selection.first );
-                else
-                    selection.first += 1.0 / alpha * ( reward - selection.first );
-                estimation.insert(selection);
-
+                UpdateReward( selection, reward );
+        
                 return selection.second;
             }
         }
@@ -95,5 +88,19 @@ class AgentSampleAverage : public AgentInterface<T>{
             int n = t->GetArmsCount();
             for(int i=0;i<n;i++) estimation.insert({INT_MAX, i});
             steps.clear();
+        }
+    private:
+        void UpdateReward( std::pair<double, int> &selection, double reward ){
+                steps[selection.second]++;
+                // If alpha is defined, use alpha.  Otherwise use step.
+                if( std::isnan( alpha ) )
+                    selection.first += 1.0 / steps[selection.second] * ( reward - selection.first );
+                else{
+                    if( selection.first == INT_MAX )
+                        selection.first = reward;
+                    else
+                        selection.first += alpha * ( reward - selection.first );
+                }
+                estimation.insert(selection);
         }
 };

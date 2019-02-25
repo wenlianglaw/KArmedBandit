@@ -11,7 +11,8 @@
  */
 void Help(){
     std::cout<<"--plot to plot the statistic after running tests."<<std::endl;
-    std::cout<<"--sigma to set normal distribution's sigma.  This parameter only works when mahcine uses Normal distribution"<<std::endl;
+    std::cout<<"--sigma X to set normal distribution's sigma.  This parameter only works when mahcine uses Normal distribution"<<std::endl;
+    std::cout<<"--pulltimes X to set test pulling times."<<std::endl;
 }
 int main(int argc, char **argv){
     using Uni = std::uniform_real_distribution<>;
@@ -21,20 +22,16 @@ int main(int argc, char **argv){
     Help();
     bool plot_afterwards = false;
     double sigma = 2.5f;
-
+    int pull_times = 1000;
     if( argc > 1 ){
         int i=0;
         while( ++i < argc ){
             if( !strcmp( argv[i], "--plot" ) ) plot_afterwards = true;
-            if( !strcmp (argv[i], "--sigma") ) sigma = std::atof( argv[++i] );
+            else if( !strcmp (argv[i], "--sigma")  && i + 1 < argc) sigma = std::atof( argv[++i] );
+            else if( !strcmp (argv[i], "--pulltimes") && i + 1 <argc) pull_times = std::atoi( argv[++i] );
+            else { std::cout<<"Incorrect Prarmeter: "<<argv[i]<<std::endl; exit(1); }
         }
     }
-    
-    std::cout<<"hello"<<std::endl;
-    if( std::is_same<Uni, Dis>() )
-        std::cout<<"Using uniform distribution"<<std::endl;
-    else
-        std::cout<<"Using normal distribution with sigma: "<<sigma<<std::endl;
 
     // K armed machine
     int k = 10;
@@ -65,13 +62,13 @@ int main(int argc, char **argv){
     testbed.RegisterYourAgent( &greedy_with_epslion_agent);
 
     // Agent5: sample average with customized step size agent
-    AgentSampleAverage<Dis> sample_average_agent_with_step_size( "WL's sample average with step size", 0.00f, 0.15f);
+    AgentSampleAverage<Dis> sample_average_agent_with_step_size( "WL's sample average with step size", 0.00f, 0.8f);
     testbed.RegisterYourAgent( &sample_average_agent_with_step_size );
 
     // Test all agents, each of them pulls X times arms.
-    for(int i=0; i<5; i++){
+    for(int i=0; i<1; i++){
         std::cout<<"Test: "<<i<<std::endl;
-        testbed.RunAllAgents( 800 );
+        testbed.RunAllAgents( pull_times );
 
         // Print each agent's score.
         testbed.SortAndPrintUserRank();
