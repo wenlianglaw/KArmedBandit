@@ -65,7 +65,7 @@ The true value q∗(a) of each of the ten actions was selected according to a no
 
 The Agent makes decision on which arm to pull.  You may consider to implement your own algorithm for this process.
 
-## Benchmarks (To be update) 
+## Benchmarks
 
 ```
 Using normal distribution with sigma: 1
