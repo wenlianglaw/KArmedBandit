@@ -69,7 +69,6 @@ class AgentInterface{
                 }
                 out.close();
             }else{
-                out<<"No reward data in "<< agent_name<<std::endl;
             }
         }
 

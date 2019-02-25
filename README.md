@@ -46,6 +46,8 @@ class RandomAgent: public AgentInterface<T>{
 
             // Operate testbed and pull arm.
             double reward = AgentInterface<T>::testbed->PullArm( this, selection );
+            // To log reward for later plotting.
+            this->LogReward(reward);
 
             return selection;
         }
