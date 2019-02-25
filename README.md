@@ -128,3 +128,4 @@ Pulling 1000 Times
 ```
 
 
+![alt text](https://github.com/wenlianglaw/KArmBandit/blob/master/Images/Sigma_3.5.png "benchmark_fig_sigma_3.5")
