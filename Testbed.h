@@ -170,7 +170,7 @@ class Testbed {
          */
         void PrettyPrint( const std::vector<std::vector<std::string>> &strs){
             // This number is randomly selected. It specifies a row's width
-            int row_width = 60;
+            int row_width = 80;
             auto best_layout = BestLayout( strs, row_width); 
             PrettyPrintHelper( strs, std::forward<std::vector<int>&&>(best_layout));
             std::string sepRow( row_width + strs[0].size(), '-');

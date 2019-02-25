@@ -48,6 +48,10 @@ int main(int argc, char **argv){
     AgentSampleAverage<Dis> sample_average_agent( "WL's sample average agent");
     testbed.RegisterYourAgent( &sample_average_agent );
 
+    // Agent1.5: sample average with epslion
+    AgentSampleAverage<Dis> sample_average_agent_with_epslion( "WL's sample average agent with epslion", 0.1f);
+    testbed.RegisterYourAgent( &sample_average_agent_with_epslion );
+
     // Agent2:  random agent 
     RandomAgent<Dis> random_agent( "WL's random agent" );
     testbed.RegisterYourAgent( &random_agent);
@@ -57,7 +61,7 @@ int main(int argc, char **argv){
     testbed.RegisterYourAgent( &greedy_agent);
 
     // Agent4: greedy with epslion agent.
-    GreedyWithEpslionAgent<Dis> greedy_with_epslion_agent( "WL's greedy agent with errors" , 0.05f);
+    GreedyAgent<Dis> greedy_with_epslion_agent( "WL's greedy agent with errors" , 0.05f);
     testbed.RegisterYourAgent( &greedy_with_epslion_agent);
 
     // Test all agents, each of them pulls X times arms.

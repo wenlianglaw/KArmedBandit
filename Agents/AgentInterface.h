@@ -13,11 +13,15 @@ class AgentInterface{
     protected:
         // All agents should be test on testbed.
         Testbed<T> *testbed = nullptr;
+        std::random_device rd;
+        std::mt19937 gen;
     private:
         std::string agent_name;
         std::vector<double> history_rewards;
     public:
-        AgentInterface( std::string &&name ):agent_name(name){}
+        AgentInterface( std::string &&name ):agent_name(name){
+            gen = std::mt19937(rd());
+        }
         /***
          * Operate testbed and select an arm to pull based on its strategy, 
          *
