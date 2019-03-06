@@ -4,3 +4,4 @@
 #include "RandomAgent.h"
 #include "AgentSampleAverage.h"
 #include "GreedyAgent.h"
+#include "UCBAgent.h"

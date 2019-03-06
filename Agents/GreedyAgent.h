@@ -27,7 +27,7 @@ class GreedyAgent : public AgentInterface<T>{
             AgentInterface<T>::Init(t);
 
             int n = t->GetArmsCount();
-            for(int i=0;i<n;i++) estimation.insert({INT_MAX, i});
+            for(int i=0;i<n;i++) estimation.insert({INT32_MAX, i});
         }
 
         virtual int PullArm() override{

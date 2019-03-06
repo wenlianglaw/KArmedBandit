@@ -64,7 +64,7 @@ class Testbed {
          */
         void RegisterYourAgent( AgentInterface<T> *agent){
             if( all_agents.find( agent ) != all_agents.end() )
-                throw("Agent with same name exists!");
+                throw(std::runtime_error("Same agent exists"));
             
             agent->Init(this);
             all_agents.insert(agent);

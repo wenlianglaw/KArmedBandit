@@ -24,7 +24,7 @@ class AgentSampleAverage : public AgentInterface<T>{
         using Key_t = std::pair<double, int>;
         std::set<Key_t, std::greater<Key_t>> estimation;
         // <arm, choosen times>
-        std::unordered_map<int, int> steps;
+        std::unordered_map<int, int> choose_cnt;
         double epslion;
         double alpha;
 
@@ -86,17 +86,17 @@ class AgentSampleAverage : public AgentInterface<T>{
         void Init(Testbed<T> *t) override {
             AgentInterface<T>::Init(t);
             int n = t->GetArmsCount();
-            for(int i=0;i<n;i++) estimation.insert({INT_MAX, i});
-            steps.clear();
+            for(int i=0;i<n;i++) estimation.insert({INT32_MAX, i});
+            choose_cnt.clear();
         }
     private:
         void UpdateReward( std::pair<double, int> &selection, double reward ){
-                steps[selection.second]++;
+                choose_cnt[selection.second]++;
                 // If alpha is defined, use alpha.  Otherwise use step.
                 if( std::isnan( alpha ) )
-                    selection.first += 1.0 / steps[selection.second] * ( reward - selection.first );
+                    selection.first += 1.0 / choose_cnt[selection.second] * ( reward - selection.first );
                 else{
-                    if( selection.first == INT_MAX )
+                    if( selection.first == INT32_MAX )
                         selection.first = reward;
                     else
                         selection.first += alpha * ( reward - selection.first );

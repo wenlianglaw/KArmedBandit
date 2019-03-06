@@ -1,5 +1,6 @@
 #include <iostream>
 #include <random>
+#include <stdio.h> // strcmp
 
 #include "./Machines/Machine.h"
 #include "Testbed.h"
@@ -14,6 +15,7 @@ void Help(){
     std::cout<<"--sigma X to set normal distribution's sigma.  This parameter only works when mahcine uses Normal distribution"<<std::endl;
     std::cout<<"--pulltimes X to set test pulling times."<<std::endl;
 }
+
 int main(int argc, char **argv){
     using Uni = std::uniform_real_distribution<>;
     using Normal = std::normal_distribution<>;
@@ -65,6 +67,11 @@ int main(int argc, char **argv){
     AgentSampleAverage<Dis> sample_average_agent_with_step_size( "WL's sample average with step size", 0.00f, 0.8f);
     testbed.RegisterYourAgent( &sample_average_agent_with_step_size );
 
+    try{
+        testbed.RegisterYourAgent( &sample_average_agent );
+    }catch(std::exception &ex){
+        std::cout<<ex.what()<<std::endl;
+    }
     // Test all agents, each of them pulls X times arms.
     for(int i=0; i<1; i++){
         std::cout<<"Test: "<<i<<std::endl;
