@@ -11,6 +11,7 @@
  * Display help info.
  */
 void Help(){
+    std::cout<<"--help to display help infomation."<<std::endl;
     std::cout<<"--plot to plot the statistic after running tests."<<std::endl;
     std::cout<<"--sigma X to set normal distribution's sigma.  This parameter only works when mahcine uses Normal distribution"<<std::endl;
     std::cout<<"--pulltimes X to set test pulling times."<<std::endl;
@@ -31,6 +32,7 @@ int main(int argc, char **argv){
             if( !strcmp( argv[i], "--plot" ) ) plot_afterwards = true;
             else if( !strcmp (argv[i], "--sigma")  && i + 1 < argc) sigma = std::atof( argv[++i] );
             else if( !strcmp (argv[i], "--pulltimes") && i + 1 <argc) pull_times = std::atoi( argv[++i] );
+            else if( !strcmp (argv[i], "--help") ) { Help(); exit(0); }
             else { std::cout<<"Incorrect Prarmeter: "<<argv[i]<<std::endl; exit(1); }
         }
     }
