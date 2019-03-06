@@ -1,6 +1,6 @@
 #include <iostream>
 #include <random>
-#include <stdio.h> // strcmp
+#include <string.h> // strcmp
 
 #include "./Machines/Machine.h"
 #include "Testbed.h"
