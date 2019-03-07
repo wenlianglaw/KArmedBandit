@@ -132,7 +132,7 @@ class Testbed {
          * |  1   |   ....       |    ......     |      ......    |
          *  ------------------------------------------------------
          */
-        void SortAndPrintUserRank(){
+        void SortAndPrintAgentRank(){
             using namespace std;
             // Sort
             std::vector<AgentInterface<T>*> sorted_agent;

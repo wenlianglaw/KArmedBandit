@@ -18,8 +18,8 @@ void Help(){
 }
 
 int main(int argc, char **argv){
-    using Uni = std::uniform_real_distribution<>;
-    using Normal = std::normal_distribution<>;
+    using Uni __attribute__((unused)) = std::uniform_real_distribution<>;
+    using Normal __attribute__((unused)) = std::normal_distribution<>;
     using Dis = Normal;
 
     Help();
@@ -80,7 +80,7 @@ int main(int argc, char **argv){
         testbed.RunAllAgents( pull_times );
 
         // Print each agent's score.
-        testbed.SortAndPrintUserRank();
+        testbed.SortAndPrintAgentRank();
     }
 
     // Log data to log files.
