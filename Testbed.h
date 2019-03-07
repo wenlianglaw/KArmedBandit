@@ -62,7 +62,7 @@ class Testbed {
         /***
          * Provide your agent.
          */
-        void RegisterYourAgent( AgentInterface<T> *agent){
+        void RegisterAgent( AgentInterface<T> *agent){
             if( all_agents.find( agent ) != all_agents.end() )
                 throw(std::runtime_error("Same agent exists"));
             
