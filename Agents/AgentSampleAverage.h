@@ -61,7 +61,6 @@ class AgentSampleAverage : public AgentInterface<T>{
 
                 // Apply this selection
                 double reward = AgentInterface<T>::testbed->PullArm( this, selection.second );
-                this->LogReward(reward);
 
                 // Update new estimation for this selection
                 UpdateReward( selection, reward );
@@ -71,10 +70,9 @@ class AgentSampleAverage : public AgentInterface<T>{
             else{
 
                 auto selection = *estimation.begin();
-
                 estimation.erase( estimation.begin() );
+
                 double reward = AgentInterface<T>::testbed->PullArm( this, selection.second );
-                this->LogReward(reward);
 
                 // Update new estimation
                 UpdateReward( selection, reward );
@@ -90,7 +88,7 @@ class AgentSampleAverage : public AgentInterface<T>{
             choose_cnt.clear();
         }
     private:
-        void UpdateReward( std::pair<double, int> &selection, double reward ){
+        void UpdateReward( Key_t &selection, double reward ){
                 choose_cnt[selection.second]++;
                 // If alpha is defined, use alpha.  Otherwise use step.
                 if( std::isnan( alpha ) )

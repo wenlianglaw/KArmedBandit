@@ -14,8 +14,7 @@ class RandomAgent: public AgentInterface<T>{
             int selection = this->gen() % (AgentInterface<T>::testbed->GetArmsCount());
 
             // Operate testbed and pull arm.
-            double reward = AgentInterface<T>::testbed->PullArm( this, selection );
-            this->LogReward(reward);
+            double reward __attribute__((unused)) = AgentInterface<T>::testbed->PullArm( this, selection );
 
             return selection;
         }

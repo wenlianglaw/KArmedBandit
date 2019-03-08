@@ -42,7 +42,6 @@ class GreedyAgent : public AgentInterface<T>{
 
                 // Apply this selection
                 double reward = AgentInterface<T>::testbed->PullArm( this, selection.second );
-                this->LogReward(reward);
 
                 // Update new estimation for this selection
                 selection.first = reward;
@@ -54,7 +53,6 @@ class GreedyAgent : public AgentInterface<T>{
                 auto selection = *estimation.begin();
 
                 double reward = AgentInterface<T>::testbed->PullArm( this, selection.second );
-                this->LogReward(reward);
 
                 // Update new estimation
                 estimation.erase( estimation.begin() );

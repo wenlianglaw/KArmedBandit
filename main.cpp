@@ -24,7 +24,7 @@ int main(int argc, char **argv){
 
     Help();
     bool plot_afterwards = false;
-    double sigma = 2.5f;
+    double sigma = 1.0f;
     int pull_times = 1000;
     if( argc > 1 ){
         int i=0;
@@ -55,20 +55,24 @@ int main(int argc, char **argv){
 
     // Agent2:  random agent 
     RandomAgent<Dis> random_agent( "WL's random agent" );
-    testbed.RegisterAgent( &random_agent);
+    //testbed.RegisterAgent( &random_agent);
 
     // Agent3: greedy agent.
     GreedyAgent<Dis> greedy_agent( "WL's greedy agent" );
-    testbed.RegisterAgent( &greedy_agent);
+    //testbed.RegisterAgent( &greedy_agent);
 
     // Agent4: greedy with epslion agent.
     GreedyAgent<Dis> greedy_with_epslion_agent( "WL's greedy agent with epslion" , 0.05f);
-    testbed.RegisterAgent( &greedy_with_epslion_agent);
+    //testbed.RegisterAgent( &greedy_with_epslion_agent);
 
     // Agent5: sample average with customized step size agent
     AgentSampleAverage<Dis> sample_average_agent_with_step_size( "WL's sample average with step size", 0.00f, 0.8f);
-    testbed.RegisterAgent( &sample_average_agent_with_step_size );
+    //testbed.RegisterAgent( &sample_average_agent_with_step_size );
 
+    // Agent6: UCB
+    UCBAgent<Dis> ucb_agent("My UCB agent", .8f /* c */);
+    testbed.RegisterAgent(&ucb_agent);
+    
     try{
         testbed.RegisterAgent( &sample_average_agent );
     }catch(std::exception &ex){

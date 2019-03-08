@@ -72,9 +72,10 @@ class AgentInterface{
             }
         }
 
-    protected:
         inline virtual void LogReward( double reward ){
             history_rewards.push_back(reward);
         }
 
+    protected:
 };
+

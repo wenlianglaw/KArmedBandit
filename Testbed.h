@@ -83,6 +83,7 @@ class Testbed {
             double reward = machine->GetReward(k);
             user_steps[agent]++;
             user_score[agent] += reward;
+            agent->LogReward(reward);
             return reward;
         }
 
