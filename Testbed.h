@@ -131,7 +131,7 @@ class Testbed {
             vector<string> row { "Name", "1st","2nd","3rd"};
             constexpr int diff_ranks = 3;
             vector<vector<string>> buffer;
-            buffer.push_back(row);
+            buffer.emplace_back(row);
 
             // Run tournments
             // Name the agents a number and we will use their assigned numbers later.
@@ -169,9 +169,9 @@ class Testbed {
 
             for ( auto agent : sorted_agent ){
                 row.clear();
-                row.push_back(agent->GetName());
+                row.emplace_back(agent->GetName());
                 for( int j=0; j < diff_ranks; j++)
-                    row.push_back(to_string(rank[agent_no[agent]][j]));
+                    row.emplace_back(to_string(rank[agent_no[agent]][j]));
                 buffer.emplace_back( row );
             }
             
@@ -212,7 +212,7 @@ class Testbed {
 
             // Prepare header's data.
             row = {"Rank", "Agent Name", "Total Score", "Average Score"};
-            buffer.push_back(row);
+            buffer.emplace_back(row);
             
             // Prepare each row's data.
             int rank = 1;
@@ -220,7 +220,7 @@ class Testbed {
                 row = { to_string(rank), agent->GetName(), to_string(user_score[agent]),
                     to_string(user_score[agent]/ user_steps[agent])};
                 rank++;
-                buffer.push_back(row);
+                buffer.emplace_back(row);
             }
             cout<<"Pulling "<< pulling_times<<" Times"<<endl;
             PrettyPrint(buffer);
