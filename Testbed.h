@@ -151,11 +151,11 @@ class Testbed {
 
             for( int i = 0; i < tournament_times; i++ ){
                 RunAllAgents(pull_times);
+
+                // Update rank.
                 sort( sorted_agent.begin(), sorted_agent.end(), [&, this]( auto *agent1, auto *agent2){
                         return (this->user_score)[agent1] > (this->user_score)[agent2];
                         });
-
-                // Count the first diff_ranks places agent
                 for( int j=0; j < diff_ranks; j++)
                     rank[agent_no[sorted_agent[j]]][j]++;
             }
