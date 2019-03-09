@@ -28,10 +28,10 @@ class UCBAgent : public AgentInterface<T>{
             choose_cnt.clear();
             total_steps = 0;
             int k = this->testbed->GetArmsCount();
-            estimation = std::vector<double>(k, 0.0f);
+            estimation = std::vector<double>(k, INT32_MAX);
             ucb.clear();
             for(int i=0; i<k; i++)
-                ucb.insert({0.0f, i});
+                ucb.insert({INT32_MAX, i});
         }
 
         int PullArm() override {

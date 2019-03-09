@@ -41,7 +41,7 @@ int main(int argc, char **argv){
     }
 
     // K armed machine
-    int k = 10;
+    int k = 12;
     std::cout<<"sigma "<<sigma<<std::endl;
     KArmMachine<Dis>  machine(k, sigma );
 
