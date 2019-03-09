@@ -129,6 +129,7 @@ class Testbed {
             using namespace std;
             cout<<"Running tournment "<< tournament_times <<" times"<<endl;
             vector<string> row { "Name", "1st","2nd","3rd"};
+            constexpr int diff_ranks = 3;
             vector<vector<string>> buffer;
             buffer.push_back(row);
 
@@ -140,7 +141,6 @@ class Testbed {
                 agent_no[agent] = agent_cnt++;
 
             // Rank prep.  We are displaying diff_ranks different ranks.
-            constexpr int diff_ranks = 3;
             vector<array<int,diff_ranks>> rank(agent_cnt, array<int,diff_ranks>{0,0,0});
             
             // Run tournament.
