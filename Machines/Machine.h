@@ -23,6 +23,11 @@ class KArmMachine: public MachineInterface{
             sigma = _sigma;
         }
 
+
+        void Init() override{
+            ResetArms(GetArmsCount());
+        }
+
         void ResetArms(int k) override {
             arms.clear();
             arms.reserve(k);

@@ -9,6 +9,7 @@
 #include <unordered_set>
 #include <algorithm>
 #include <functional>
+#include <array>
 
 #include "./Machines/MachineInterface.h"
 #include "./Agents/AgentInterface.h"
@@ -39,7 +40,7 @@ class Testbed {
          */
         void Init(){
             timeout = 60;
-            machine->ResetArms();
+            machine->Init();
             user_score.clear();
             user_steps.clear();
         }
@@ -115,6 +116,68 @@ class Testbed {
                 }
             }
         }
+
+        /***
+         * ------------------------------
+         *| Name |  1st  |  2nd  |  3rd  |
+         * ------------------------------
+         *| ...  |  ...  |  ...  |  ...  |
+         * ------------------------------
+         *
+         */
+        void RunTournment( int tournament_times, int pull_times ){
+            using namespace std;
+            cout<<"Running tournment "<< tournament_times <<" times"<<endl;
+            vector<string> row { "Name", "1st","2nd","3rd"};
+            vector<vector<string>> buffer;
+            buffer.push_back(row);
+
+            // Run tournments
+            // Name the agents a number and we will use their assigned numbers later.
+            unordered_map<AgentInterface<T>*, int> agent_no;
+            int agent_cnt=0;
+            for( auto agent : all_agents )
+                agent_no[agent] = agent_cnt++;
+
+            // Rank prep.  We are displaying diff_ranks different ranks.
+            constexpr int diff_ranks = 3;
+            vector<array<int,diff_ranks>> rank(agent_cnt, array<int,diff_ranks>{0,0,0});
+            
+            // Run tournament.
+            // for sorting
+            std::vector<AgentInterface<T>*> sorted_agent;
+            std::transform( all_agents.begin(), all_agents.end(), std::back_inserter(sorted_agent),
+                    []( const auto& a ){ return a;});
+
+            for( int i = 0; i < tournament_times; i++ ){
+                RunAllAgents(pull_times);
+                sort( sorted_agent.begin(), sorted_agent.end(), [&, this]( auto *agent1, auto *agent2){
+                        return (this->user_score)[agent1] > (this->user_score)[agent2];
+                        });
+
+                // Count the first diff_ranks places agent
+                for( int j=0; j < diff_ranks; j++)
+                    rank[agent_no[sorted_agent[j]]][j]++;
+            }
+
+            // Sort and Display final rank table.
+            sort( sorted_agent.begin(), sorted_agent.end(), [&]( auto *agent1, auto *agent2){
+                    int no1(agent_no[agent1]), no2(agent_no[agent2]);
+                    for(int j=0;j<diff_ranks;j++) if(rank[no1][j]>rank[no2][j]) return true; else if(rank[no1][j] < rank[no2][j]) return false;
+                    return true;
+                        });
+
+            for ( auto agent : sorted_agent ){
+                row.clear();
+                row.push_back(agent->GetName());
+                for( int j=0; j < diff_ranks; j++)
+                    row.push_back(to_string(rank[agent_no[agent]][j]));
+                buffer.emplace_back( row );
+            }
+            
+            PrettyPrint( buffer );
+        }
+
 
         /***
          * Write Logs for each agent to its own log file.

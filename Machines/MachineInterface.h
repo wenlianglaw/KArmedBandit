@@ -13,6 +13,10 @@ class MachineInterface{
          */
         virtual void ResetArms(int k) = 0;
         /***
+         * Init
+         */
+        virtual void Init() = 0;
+        /***
          * Reset arms, with random probability distribution.
          */
         virtual void ResetArms() { ResetArms(GetArmsCount());}

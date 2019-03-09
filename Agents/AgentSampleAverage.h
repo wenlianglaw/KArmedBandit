@@ -27,6 +27,7 @@ class AgentSampleAverage : public AgentInterface<T>{
         std::unordered_map<int, int> choose_cnt;
         double epslion;
         double alpha;
+        int total_steps;
 
     public:
         /***
@@ -50,6 +51,7 @@ class AgentSampleAverage : public AgentInterface<T>{
          *
          **/
         int PullArm() override {
+            total_steps++;
             // With probility epslion, selection a random node.
             if( epslion != 0.0f && std::uniform_real_distribution<>(0.0f, 1.0f)(this->gen) < epslion ){
                 // Randomly select an arm
@@ -86,6 +88,7 @@ class AgentSampleAverage : public AgentInterface<T>{
             int n = t->GetArmsCount();
             for(int i=0;i<n;i++) estimation.insert({INT32_MAX, i});
             choose_cnt.clear();
+            total_steps = 0;
         }
     private:
         void UpdateReward( Key_t &selection, double reward ){

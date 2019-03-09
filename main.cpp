@@ -15,6 +15,7 @@ void Help(){
     std::cout<<"--plot to plot the statistic after running tests."<<std::endl;
     std::cout<<"--sigma X to set normal distribution's sigma.  This parameter only works when mahcine uses Normal distribution"<<std::endl;
     std::cout<<"--pulltimes X to set test pulling times."<<std::endl;
+    std::cout<<"--tournament_times to set how many tournament will be runned."<<std::endl;
 }
 
 int main(int argc, char **argv){
@@ -26,6 +27,7 @@ int main(int argc, char **argv){
     bool plot_afterwards = false;
     double sigma = 1.0f;
     int pull_times = 1000;
+    int tournament_times = 10;
     if( argc > 1 ){
         int i=0;
         while( ++i < argc ){
@@ -33,6 +35,7 @@ int main(int argc, char **argv){
             else if( !strcmp (argv[i], "--sigma")  && i + 1 < argc) sigma = std::atof( argv[++i] );
             else if( !strcmp (argv[i], "--pulltimes") && i + 1 <argc) pull_times = std::atoi( argv[++i] );
             else if( !strcmp (argv[i], "--help") ) { Help(); exit(0); }
+            else if( !strcmp (argv[i], "--tournament_times") && i + 1 <argc) tournament_times = std::atoi( argv[++i] );
             else { std::cout<<"Incorrect Prarmeter: "<<argv[i]<<std::endl; exit(1); }
         }
     }
@@ -55,22 +58,22 @@ int main(int argc, char **argv){
 
     // Agent2:  random agent 
     RandomAgent<Dis> random_agent( "WL's random agent" );
-    //testbed.RegisterAgent( &random_agent);
+    testbed.RegisterAgent( &random_agent);
 
     // Agent3: greedy agent.
     GreedyAgent<Dis> greedy_agent( "WL's greedy agent" );
-    //testbed.RegisterAgent( &greedy_agent);
+    testbed.RegisterAgent( &greedy_agent);
 
     // Agent4: greedy with epslion agent.
     GreedyAgent<Dis> greedy_with_epslion_agent( "WL's greedy agent with epslion" , 0.05f);
-    //testbed.RegisterAgent( &greedy_with_epslion_agent);
+    testbed.RegisterAgent( &greedy_with_epslion_agent);
 
     // Agent5: sample average with customized step size agent
     AgentSampleAverage<Dis> sample_average_agent_with_step_size( "WL's sample average with step size", 0.00f, 0.8f);
-    //testbed.RegisterAgent( &sample_average_agent_with_step_size );
+    testbed.RegisterAgent( &sample_average_agent_with_step_size );
 
     // Agent6: UCB
-    UCBAgent<Dis> ucb_agent("My UCB agent", .8f /* c */);
+    UCBAgent<Dis> ucb_agent("My UCB agent", .3f /* c */);
     testbed.RegisterAgent(&ucb_agent);
     
     try{
@@ -79,13 +82,13 @@ int main(int argc, char **argv){
         std::cout<<ex.what()<<std::endl;
     }
     // Test all agents, each of them pulls X times arms.
-    for(int i=0; i<1; i++){
-        std::cout<<"Test: "<<i<<std::endl;
-        testbed.RunAllAgents( pull_times );
+    testbed.RunAllAgents( pull_times );
 
-        // Print each agent's score.
-        testbed.SortAndPrintAgentRank();
-    }
+    // Run a tournament
+    testbed.RunTournment(tournament_times, pull_times);
+
+    // Print each agent's score.
+    //testbed.SortAndPrintAgentRank();
 
     // Log data to log files.
     testbed.LogAgentsData();
