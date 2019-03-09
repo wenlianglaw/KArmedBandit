@@ -73,7 +73,7 @@ int main(int argc, char **argv){
     testbed.RegisterAgent( &sample_average_agent_with_step_size );
 
     // Agent6: UCB
-    UCBAgent<Dis> ucb_agent("My UCB agent", .3f /* c */);
+    UCBAgent<Dis> ucb_agent("My UCB agent", .2f /* c */);
     testbed.RegisterAgent(&ucb_agent);
     
     try{
