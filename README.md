@@ -7,8 +7,11 @@ I'm reading \<<Reinforcement leraning\>> right now.  This program is made for le
 **Make**  
 ```make```
 
-Run   
-```./karms --plot --sigma 2.5```  
+Make sure you have ```Logs``` directory in the same folder.  If not, execute   
+```mkdir Logs```  
+
+Run .  
+```./karms --help```  
 
 --plot option plots the average rewards of each agent.   
 --sigma sets the sigma of the normal distribution.   
