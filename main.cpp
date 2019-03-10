@@ -6,6 +6,9 @@
 #include "Testbed.h"
 #include "./Agents/Agents.h"
 
+std::random_device rd;
+std::mt19937 gen;
+
 
 /***
  * Display help info.
@@ -16,6 +19,7 @@ void Help(){
     std::cout<<"--sigma X to set normal distribution's sigma.  This parameter only works when mahcine uses Normal distribution"<<std::endl;
     std::cout<<"--pulltimes X to set test pulling times."<<std::endl;
     std::cout<<"--tournament_times to set how many tournament will be runned."<<std::endl;
+    std::cout<<"--k K K arms."<<std::endl;
 }
 
 int main(int argc, char **argv){
@@ -28,27 +32,38 @@ int main(int argc, char **argv){
     double sigma = 1.0f;
     int pull_times = 1000;
     int tournament_times = 10;
+    // K armed machine
+    int k = 10;
+
+    gen=std::mt19937(rd());
+
     if( argc > 1 ){
         int i=0;
         while( ++i < argc ){
             if( !strcmp( argv[i], "--plot" ) ) plot_afterwards = true;
-            else if( !strcmp (argv[i], "--sigma")  && i + 1 < argc) sigma = std::atof( argv[++i] );
-            else if( !strcmp (argv[i], "--pulltimes") && i + 1 <argc) pull_times = std::atoi( argv[++i] );
-            else if( !strcmp (argv[i], "--help") ) { Help(); exit(0); }
-            else if( !strcmp (argv[i], "--tournament_times") && i + 1 <argc) tournament_times = std::atoi( argv[++i] );
+            else if( !strcmp(argv[i], "--sigma")  && i + 1 < argc) sigma = std::atof( argv[++i] );
+            else if( !strcmp(argv[i], "--pulltimes") && i + 1 <argc) pull_times = std::atoi( argv[++i] );
+            else if( !strcmp(argv[i], "--help") ) { Help(); exit(0); }
+            else if( !strcmp(argv[i], "--tournament_times") && i + 1 <argc) tournament_times = std::atoi( argv[++i] );
+            else if( !strcmp(argv[i], "--k") && i+1 < argc) k = std::atoi(argv[++i]);
             else { std::cout<<"Incorrect Prarmeter: "<<argv[i]<<std::endl; exit(1); }
         }
     }
 
-    // K armed machine
-    int k = 12;
     std::cout<<"sigma "<<sigma<<std::endl;
-    KArmMachine<Dis>  machine(k, sigma );
+
+    // Init Machine
+    std::function<Dis(void)> dist_init_func;
+    if( std::is_same<Dis, Normal>())
+        dist_init_func = [&](){ return Dis(Dis(0,5)(gen),sigma);};
+    else
+        throw std::runtime_error("Unimplemented Distribution Init function");
+    KArmMachine<Dis>  machine(k,dist_init_func);
 
     // Testbed
     Testbed<Dis> testbed(&machine);
 
-    // Agent1:  sample average agent
+       // Agent1:  sample average agent
     AgentSampleAverage<Dis> sample_average_agent( "WL's sample average agent");
     testbed.RegisterAgent( &sample_average_agent );
 
@@ -73,7 +88,7 @@ int main(int argc, char **argv){
     testbed.RegisterAgent( &sample_average_agent_with_step_size );
 
     // Agent6: UCB
-    UCBAgent<Dis> ucb_agent("My UCB agent", .2f /* c */);
+    UCBAgent<Dis> ucb_agent("My UCB agent", .3f /* c */);
     testbed.RegisterAgent(&ucb_agent);
     
     try{
@@ -88,7 +103,7 @@ int main(int argc, char **argv){
     testbed.RunTournment(tournament_times, pull_times);
 
     // Print each agent's score.
-    //testbed.SortAndPrintAgentRank();
+    testbed.SortAndPrintAgentRank();
 
     // Log data to log files.
     testbed.LogAgentsData();
@@ -97,6 +112,7 @@ int main(int argc, char **argv){
     if( plot_afterwards ){
         std::system("python ./plot_stats.py");
     }
+
 
     std::cout<<"Thank you!"<<std::endl;
     return 0;
