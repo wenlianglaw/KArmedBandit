@@ -17,6 +17,18 @@ class KArmMachine: public MachineInterface{
 
     public:
         std::vector<Distribution> arms;
+
+        /***
+         * Constructor.
+         *
+         * Args:
+         *  k:  K arms.
+         *  _func:  The initialzation function for for distribution.  For example:
+         *      if the Distribution is Normal distribution, one should pass function like this
+         *      lambda [](){ return Distribution(0, 0);}
+         *      or some similiar way. 
+         *
+         */
         KArmMachine(int k, std::function<Distribution (void)> _func ){
             gen = std::mt19937(rd());
             dist_init_func = _func;

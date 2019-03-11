@@ -100,12 +100,13 @@ int main(int argc, char **argv){
     // Test all agents, each of them pulls X times arms.
     testbed.RunAllAgents( pull_times );
 
-    // Run a tournament
-    testbed.RunTournment(tournament_times, pull_times);
-
     // Print each agent's score.
     testbed.SortAndPrintAgentRank();
 
+    // Run a tournament
+    if( tournament_times > 0 )
+        testbed.RunTournment(tournament_times, pull_times);
+    
     // Log data to log files.
     testbed.LogAgentsData();
 
