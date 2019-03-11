@@ -35,6 +35,7 @@ class AgentInterface{
         
         /***
          * Init state.  Assign a testbed.
+         * Will be called by testbed.
          */
         virtual void Init(Testbed<T> *t){
             testbed = t;

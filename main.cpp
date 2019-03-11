@@ -65,35 +65,37 @@ int main(int argc, char **argv){
 
        // Agent1:  sample average agent
     AgentSampleAverage<Dis> sample_average_agent( "WL's sample average agent");
-    testbed.RegisterAgent( &sample_average_agent );
 
     // Agent1.5: sample average with epslion
     AgentSampleAverage<Dis> sample_average_agent_with_epslion( "WL's sample average agent with epslion", 0.05f);
-    testbed.RegisterAgent( &sample_average_agent_with_epslion );
 
     // Agent2:  random agent 
     RandomAgent<Dis> random_agent( "WL's random agent" );
-    testbed.RegisterAgent( &random_agent);
 
     // Agent3: greedy agent.
     GreedyAgent<Dis> greedy_agent( "WL's greedy agent" );
-    testbed.RegisterAgent( &greedy_agent);
 
     // Agent4: greedy with epslion agent.
     GreedyAgent<Dis> greedy_with_epslion_agent( "WL's greedy agent with epslion" , 0.05f);
-    testbed.RegisterAgent( &greedy_with_epslion_agent);
 
     // Agent5: sample average with customized step size agent
     AgentSampleAverage<Dis> sample_average_agent_with_step_size( "WL's sample average with step size", 0.00f, 0.8f);
-    testbed.RegisterAgent( &sample_average_agent_with_step_size );
 
     // Agent6: UCB
-    UCBAgent<Dis> ucb_agent("My UCB agent", .3f /* c */);
-    testbed.RegisterAgent(&ucb_agent);
+    UCBAgent<Dis> ucb_agent("My UCB agent", 1.4f /* c */);
     
     // Agent7: Gradient Bandit Agent
     GradientBanditAgent<Dis> gradient_bandit_agent("WL's Gradient Bandit Agent", 0.2f);
+
+    // Register agents
     testbed.RegisterAgent( &gradient_bandit_agent );
+    testbed.RegisterAgent(&ucb_agent);
+    // testbed.RegisterAgent( &sample_average_agent_with_step_size );
+    // testbed.RegisterAgent( &greedy_with_epslion_agent);
+    // testbed.RegisterAgent( &greedy_agent);
+    // testbed.RegisterAgent( &random_agent);
+    testbed.RegisterAgent( &sample_average_agent_with_epslion );
+    testbed.RegisterAgent( &sample_average_agent );
 
     // Test all agents, each of them pulls X times arms.
     testbed.RunAllAgents( pull_times );
