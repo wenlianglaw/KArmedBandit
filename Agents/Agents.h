@@ -5,3 +5,4 @@
 #include "AgentSampleAverage.h"
 #include "GreedyAgent.h"
 #include "UCBAgent.h"
+#include "GradientBanditAgent.h"

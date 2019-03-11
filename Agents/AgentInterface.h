@@ -4,6 +4,7 @@
 #include <string>
 #include <chrono>
 #include <ctime>
+#include <utility>
 
 #include "../Testbed.h"
 
@@ -19,6 +20,8 @@ class AgentInterface{
         std::string agent_name;
         std::vector<double> history_rewards;
     public:
+        AgentInterface( const std::string &name ) = delete;
+
         AgentInterface( std::string &&name ):agent_name(name){
             gen = std::mt19937(rd());
         }

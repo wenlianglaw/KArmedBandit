@@ -5,6 +5,7 @@
 #include <vector>
 #include <functional>
 
+#include <iostream>
 /* Only support uniform_real_distribution and normal_distribution */
 template <typename Distribution>
 class KArmMachine: public MachineInterface{
@@ -29,7 +30,8 @@ class KArmMachine: public MachineInterface{
         void ResetArms(int k ) override {
             arms.clear();
             arms.reserve(k);
-            arms.push_back(dist_init_func());
+            for(int i=0; i<k; i++)
+                arms.push_back(dist_init_func());
         }
 
         double GetReward(int arm) override {

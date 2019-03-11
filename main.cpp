@@ -91,11 +91,10 @@ int main(int argc, char **argv){
     UCBAgent<Dis> ucb_agent("My UCB agent", .3f /* c */);
     testbed.RegisterAgent(&ucb_agent);
     
-    try{
-        testbed.RegisterAgent( &sample_average_agent );
-    }catch(std::exception &ex){
-        std::cout<<ex.what()<<std::endl;
-    }
+    // Agent7: Gradient Bandit Agent
+    GradientBanditAgent<Dis> gradient_bandit_agent("WL's Gradient Bandit Agent", 0.2f);
+    testbed.RegisterAgent( &gradient_bandit_agent );
+
     // Test all agents, each of them pulls X times arms.
     testbed.RunAllAgents( pull_times );
 
