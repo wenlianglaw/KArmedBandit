@@ -61,7 +61,7 @@ class Testbed {
         }
 
         /***
-         * Provide your agent.
+         * Register your agent.
          */
         void RegisterAgent( AgentInterface<T> *agent){
             if( all_agents.find( agent ) != all_agents.end() )
@@ -163,9 +163,11 @@ class Testbed {
             // Sort and Display final rank table.
             sort( sorted_agent.begin(), sorted_agent.end(), [&]( auto *agent1, auto *agent2){
                     int no1(agent_no[agent1]), no2(agent_no[agent2]);
-                    for(int j=0;j<diff_ranks;j++) if(rank[no1][j]>rank[no2][j]) return true; else if(rank[no1][j] < rank[no2][j]) return false;
+                    for(int j=0;j<diff_ranks;j++)
+                        if(rank[no1][j]>rank[no2][j]) return true;
+                        else if(rank[no1][j] < rank[no2][j]) return false;
                     return true;
-                        });
+                    });
 
             for ( auto agent : sorted_agent ){
                 row.clear();

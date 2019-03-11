@@ -63,7 +63,7 @@ int main(int argc, char **argv){
     // Testbed
     Testbed<Dis> testbed(&machine);
 
-       // Agent1:  sample average agent
+    // Agent1:  sample average agent
     AgentSampleAverage<Dis> sample_average_agent( "WL's sample average agent");
 
     // Agent1.5: sample average with epslion
@@ -97,16 +97,16 @@ int main(int argc, char **argv){
     testbed.RegisterAgent( &sample_average_agent_with_epslion );
     testbed.RegisterAgent( &sample_average_agent );
 
+    // Run a tournament
+    if( tournament_times > 0 )
+        testbed.RunTournment(tournament_times, pull_times);
+    
     // Test all agents, each of them pulls X times arms.
     testbed.RunAllAgents( pull_times );
 
     // Print each agent's score.
     testbed.SortAndPrintAgentRank();
 
-    // Run a tournament
-    if( tournament_times > 0 )
-        testbed.RunTournment(tournament_times, pull_times);
-    
     // Log data to log files.
     testbed.LogAgentsData();
 

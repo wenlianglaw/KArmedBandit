@@ -69,37 +69,41 @@ The Agent makes decision on which arm to pull.  You may consider to implement yo
 ## Benchmarks
 
 ```
-./karms --tournament_times 1000
+./karms --plot --tournament_times 800 --k 10 --sigma 2.5
 --help to display help infomation.
 --plot to plot the statistic after running tests.
 --sigma X to set normal distribution's sigma.  This parameter only works when mahcine uses Normal distribution
 --pulltimes X to set test pulling times.
 --tournament_times to set how many tournament will be runned.
-sigma 1
-Same agent exists
-Running tournment 1000 times
+--k K K arms.
+sigma 2.5
+Running tournment 800 times
  ------------------------------------------------------------------------------------
 |                          Name                          |    1st    |    2nd    |3rd|
  ------------------------------------------------------------------------------------
-|                      My UCB agent                      |    382    |    280    |198|
+|                      My UCB agent                      |    349    |    316    |122|
  ------------------------------------------------------------------------------------
-|               WL's sample average agent                |    379    |    299    |214|
+|               WL's sample average agent                |    261    |    283    |183|
  ------------------------------------------------------------------------------------
-|         WL's sample average agent with epslion         |    231    |    347    |308|
+|               WL's Gradient Bandit Agent               |    186    |    156    |205|
  ------------------------------------------------------------------------------------
-|           WL's sample average with step size           |     5     |     41    |159|
+|         WL's sample average agent with epslion         |     4     |     45    |290|
  ------------------------------------------------------------------------------------
-|                   WL's greedy agent                    |     3     |     27    | 91|
+Pulling 1000 Times
  ------------------------------------------------------------------------------------
-|             WL's greedy agent with epslion             |     0     |     6     | 30|
+|Rank |                  Agent Name                 |  Total Score  |  Average Score |
  ------------------------------------------------------------------------------------
-|                   WL's random agent                    |     0     |     0     | 0 |
+|  1  |          WL's Gradient Bandit Agent         |  8405.147187  |    8.405147    |
  ------------------------------------------------------------------------------------
-Thank you!
-
-
+|  2  |                 My UCB agent                |  8251.539018  |    8.251539    |
+ ------------------------------------------------------------------------------------
+|  3  |          WL's sample average agent          |  8151.471226  |    8.151471    |
+ ------------------------------------------------------------------------------------
+|  4  |    WL's sample average agent with epslion   |  8042.607480  |    8.042607    |
+ ------------------------------------------------------------------------------------
 ```
 
-![alt text](https://github.com/wenlianglaw/KArmBandit/blob/master/Images/Sigma_1.0_1.png "benchmark_fig_sigma_1.0")
+![alt text](https://github.com/wenlianglaw/KArmBandit/blob/master/Images/Sigma_1.0_1.png "benchmark_fig_sigma_1.0")  
 
-You could see in the early stage ghe agent with epslion performs well, however in the latter stage they are lower than the non-epslion agents, because the estimate rewards are stable after exploring sufficient times.
+![alt text](https://github.com/wenlianglaw/KArmBandit/blob/master/Images/Sigma_2.5_1.png "benchmark_fig_sigma_2.5_1")
+
