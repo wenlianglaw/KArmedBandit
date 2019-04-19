@@ -14,7 +14,7 @@ build:	$(OBJECTS)
 	
 
 %.o:	%.cpp $(HEADERS)
-	$(CC) $(CFLAGS) -c $< -o $@ $(INC) $(LIBS)
+	$(CC) $(CFLAGS) -c $< -o $@ $(INC)
 
 
 clean:
