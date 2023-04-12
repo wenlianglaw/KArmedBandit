@@ -40,7 +40,7 @@ def DrawLogs( dir_name ):
   plt.draw()
   plt.subplots_adjust(left=0.03, right=0.98, top = 0.95, bottom=0.03)
   plt.pause(1)
-  raw_input('<Hit Enter To close>')
+  input('<Hit Enter To close>')
   plt.close(fig)
 
 DrawLogs(LOGS_DIR)

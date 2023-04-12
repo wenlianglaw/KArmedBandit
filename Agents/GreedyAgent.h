@@ -1,66 +1,70 @@
 /* A greedy agent.
- * 
+ *
  * Always the choose the highest estimation selection.
- */ 
+ */
 #pragma once
+#include <functional>
 #include <set>
 #include <unordered_map>
 #include <vector>
-#include <functional>
 
 #include "AgentInterface.h"
 
-template <typename T>
-class GreedyAgent : public AgentInterface<T>{
-    protected:
-        // <estimation, arm>
-        using Key_t = std::pair<double, int>;
-        std::set<Key_t, std::greater<Key_t>> estimation;
+template <typename T> class GreedyAgent : public AgentInterface<T> {
+protected:
+  // <estimation, arm>
+  using Key_t = std::pair<double, int>;
+  std::set<Key_t, std::greater<Key_t>> estimation;
 
-        double epslion = 0.1f;
-    public:
-        GreedyAgent(std::string &&name, double _ep = 0.0f): AgentInterface<T>(std::forward<std::string&&>(name)) {
-            epslion = _ep;
-        }
+  double epslion = 0.1f;
 
-        void Init(Testbed<T> *t) override {
-            AgentInterface<T>::Init(t);
+public:
+  GreedyAgent(std::string &&name, double _ep = 0.0f)
+      : AgentInterface<T>(std::forward<std::string &&>(name)) {
+    epslion = _ep;
+  }
 
-            int n = t->GetArmsCount();
-            for(int i=0;i<n;i++) estimation.insert({INT32_MAX, i});
-        }
+  void Init(Testbed<T> *t) override {
+    AgentInterface<T>::Init(t);
 
-        virtual int PullArm() override{
-            // With probility epslion, selection a random node.
-            if( std::uniform_real_distribution<>(0.0f, 1.0f)(this->gen) < epslion ){
-                // Randomly select an arm
-                int arm = this->gen() % (AgentInterface<T>::testbed->GetArmsCount());
-                auto key = std::find_if(this->estimation.begin(), this->estimation.end(),
-                        [&](auto key){ return key.second == arm; });
-                auto selection = *key;
-                this->estimation.erase(key);
+    int n = t->GetArmsCount();
+    for (int i = 0; i < n; i++)
+      estimation.insert({INT32_MAX, i});
+  }
 
-                // Apply this selection
-                double reward = AgentInterface<T>::testbed->PullArm( this, selection.second );
+  virtual int PullArm() override {
+    // With probility epslion, selection a random node.
+    if (std::uniform_real_distribution<>(0.0f, 1.0f)(this->gen) < epslion) {
+      // Randomly select an arm
+      int arm = this->gen() % (AgentInterface<T>::testbed->GetArmsCount());
+      auto key = std::find_if(this->estimation.begin(), this->estimation.end(),
+                              [&](auto key) { return key.second == arm; });
+      auto selection = *key;
+      this->estimation.erase(key);
 
-                // Update new estimation for this selection
-                selection.first = reward;
-                this->estimation.insert(selection);
+      // Apply this selection
+      double reward =
+          AgentInterface<T>::testbed->PullArm(this, selection.second);
 
-                return selection.second;
-            }
-            else{
-                auto selection = *estimation.begin();
+      // Update new estimation for this selection
+      selection.first = reward;
+      this->estimation.insert(selection);
 
-                double reward = AgentInterface<T>::testbed->PullArm( this, selection.second );
+      return selection.second;
+    } else {
+      auto selection = *estimation.begin();
 
-                // Update new estimation
-                estimation.erase( estimation.begin() );
-                selection.first = reward;
-                estimation.insert(selection);
+      double reward =
+          AgentInterface<T>::testbed->PullArm(this, selection.second);
 
-                return selection.second;
-            }
-        }
-    private:
+      // Update new estimation
+      estimation.erase(estimation.begin());
+      selection.first = reward;
+      estimation.insert(selection);
+
+      return selection.second;
+    }
+  }
+
+private:
 };
